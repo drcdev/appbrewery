@@ -45,12 +45,26 @@ class HomePage extends StatelessWidget {
               FlatButton.icon(
                 icon: Icon(Icons.remove),
                 label: Text("Get poorer..."),
-                onPressed: counter.decrement,
+                onPressed: () {
+                  bool max = counter.decrement();
+                  if (max) {
+                    final snackBar =
+                        SnackBar(content: Text("You can't get any poorer!"));
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  }
+                },
               ),
               FlatButton.icon(
                 icon: Icon(Icons.add),
                 label: Text("Get richer!"),
-                onPressed: counter.increment,
+                onPressed: () {
+                  bool max = counter.increment();
+                  if (max) {
+                    final snackBar =
+                        SnackBar(content: Text("You can't get any richer!"));
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  }
+                },
               ),
             ],
           ),

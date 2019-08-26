@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:i_am_poor/counter.dart';
 
-void main() => runApp(MyApp());
+final counter = Counter();
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+void main() => runApp(App());
+
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,18 +38,19 @@ class HomePage extends StatelessWidget {
           Image(
             image: AssetImage("images/coal.jpg"),
           ),
+          Text(counter.value.toString()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               FlatButton.icon(
                 icon: Icon(Icons.remove),
                 label: Text("Get poorer..."),
-                onPressed: () {},
+                onPressed: counter.decrement,
               ),
               FlatButton.icon(
                 icon: Icon(Icons.add),
                 label: Text("Get richer!"),
-                onPressed: () {},
+                onPressed: counter.increment,
               ),
             ],
           ),

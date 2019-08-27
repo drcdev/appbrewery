@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:i_am_poor/counter.dart';
 
 final counter = Counter();
@@ -35,10 +36,12 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image(
-            image: AssetImage("images/coal.jpg"),
+          Observer(
+            builder: (_) => Image(
+              height: MediaQuery.of(context).size.height / 2,
+              image: AssetImage(counter.image),
+            ),
           ),
-          Text(counter.value.toString()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -46,24 +49,14 @@ class HomePage extends StatelessWidget {
                 icon: Icon(Icons.remove),
                 label: Text("Get poorer..."),
                 onPressed: () {
-                  bool max = counter.decrement();
-                  if (max) {
-                    final snackBar =
-                        SnackBar(content: Text("You can't get any poorer!"));
-                    Scaffold.of(context).showSnackBar(snackBar);
-                  }
+                  counter.decrement();
                 },
               ),
               FlatButton.icon(
                 icon: Icon(Icons.add),
                 label: Text("Get richer!"),
                 onPressed: () {
-                  bool max = counter.increment();
-                  if (max) {
-                    final snackBar =
-                        SnackBar(content: Text("You can't get any richer!"));
-                    Scaffold.of(context).showSnackBar(snackBar);
-                  }
+                  counter.increment();
                 },
               ),
             ],

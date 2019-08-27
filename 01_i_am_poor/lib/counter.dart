@@ -8,9 +8,12 @@ abstract class _Counter with Store {
   @observable
   int value = 0;
 
+  @computed
+  String get image => "images/" + (value == 0 ? "coal.jpg" : "diamond.jpg");
+
   @action
   bool increment() {
-    if (value < 2) {
+    if (value < 1) {
       value++;
       return true;
     } else {

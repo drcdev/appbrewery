@@ -14,54 +14,74 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: HomePage(title: 'I Am Poor'),
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  final String title;
-
-  HomePage({
-    this.title,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: Text(title),
+        title: Observer(
+          builder: (_) => Text(counter.title),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Observer(
-            builder: (_) => Image(
-              height: MediaQuery.of(context).size.height / 2,
-              image: AssetImage(counter.image),
-            ),
-          ),
-          Row(
+      body: Builder(
+        builder: (BuildContext context) {
+          return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.remove),
-                label: Text("Get poorer..."),
-                onPressed: () {
-                  counter.decrement();
-                },
+              Observer(
+                builder: (_) => Image(
+                  height: MediaQuery.of(context).size.height / 2,
+                  image: AssetImage(counter.image),
+                ),
               ),
-              FlatButton.icon(
-                icon: Icon(Icons.add),
-                label: Text("Get richer!"),
-                onPressed: () {
-                  counter.increment();
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FlatButton.icon(
+                    icon: Icon(Icons.remove),
+                    label: Text("Get poorer..."),
+                    onPressed: () {
+                      bool min = counter.decrement();
+                      if (min) {
+                        SnackBar snackBar = SnackBar(
+                          duration: Duration(seconds: 3),
+                          content: Center(
+                            heightFactor: 1,
+                            child: Text("Sorry, you can't get any poorer!"),
+                          ),
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                  ),
+                  FlatButton.icon(
+                    icon: Icon(Icons.add),
+                    label: Text("Get richer!"),
+                    onPressed: () {
+                      bool max = counter.increment();
+                      if (max) {
+                        SnackBar snackBar = SnackBar(
+                          duration: Duration(seconds: 3),
+                          content: Center(
+                            heightFactor: 1,
+                            child: Text("Sorry, you can't get any richer!"),
+                          ),
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

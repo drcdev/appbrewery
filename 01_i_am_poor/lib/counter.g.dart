@@ -14,6 +14,11 @@ mixin _$Counter on _Counter, Store {
   @override
   String get image =>
       (_$imageComputed ??= Computed<String>(() => super.image)).value;
+  Computed<String> _$titleComputed;
+
+  @override
+  String get title =>
+      (_$titleComputed ??= Computed<String>(() => super.title)).value;
 
   final _$valueAtom = Atom(name: '_Counter.value');
 

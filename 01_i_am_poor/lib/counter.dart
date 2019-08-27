@@ -11,13 +11,16 @@ abstract class _Counter with Store {
   @computed
   String get image => "images/" + (value == 0 ? "coal.jpg" : "diamond.jpg");
 
+  @computed
+  String get title => "I Am " + (value == 0 ? "Poor" : "Rich");
+
   @action
   bool increment() {
     if (value < 1) {
       value++;
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 
@@ -25,9 +28,9 @@ abstract class _Counter with Store {
   bool decrement() {
     if (value > 0) {
       value--;
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 }
